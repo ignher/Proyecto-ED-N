@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDÉN — Drop 01</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F3EE;
+      --surface: #EBE7DF;
+      --border: #E2DDD3;
+      --taupe: #B8B1A3;
+      --carbon: #2B2B2B;
+      --text: #111111;
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg: #121212;
+      --surface: #1E1E1E;
+      --border: #2C2C2C;
+      --taupe: #777777;
+      --carbon: #D1D1D1;
+      --text: #F5F3EE;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--carbon);
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .announcement-bar {
+      background: var(--text);
+      color: var(--bg);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+
+    header {
+      position: sticky; top: 0;
+      background: var(--bg);
+      opacity: 0.96;
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.8rem; }
+
+    .btn-action {
+      background: transparent;
+      border: 1px solid var(--taupe);
+      color: var(--carbon);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-family: var(--font-main);
+      transition: all 0.3s ease;
+    }
+
+    .btn-action:hover { border-color: var(--text); color: var(--text); }
+
+    /* Hero Principal con Eslogan enfocado en Lanzamiento */
+    .hero {
+      padding: 6rem 5% 5rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-slogan {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+      margin: 0 auto 1.5rem auto;
+      line-height: 1.1;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      font-size: 0.9rem;
+      color: var(--carbon);
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto 3rem auto;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+
+    /* Timer Countdown */
+    .timer-container {
+      display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem;
+    }
+    .timer-block { display: flex; flex-direction: column; align-items: center; }
+    .timer-val { font-size: 1.5rem; font-weight: 500; color: var(--text); }
+    .timer-unit { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--taupe); }
+
+    .newsletter-box { display: flex; justify-content: center; max-width: 400px; margin: 0 auto; }
+    .newsletter-input {
+      border: 1px solid var(--carbon); border-right: none;
+      padding: 0.85rem 1.2rem; font-family: var(--font-main);
+      font-size: 0.75rem; outline: none; width: 100%;
+      background: transparent; color: var(--text);
+    }
+    .newsletter-btn {
+      background: var(--text); color: var(--bg);
+      border: 1px solid var(--text); padding: 0.85rem 1.6rem;
+      font-family: var(--font-main); font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer;
+    }
+
+    /* Catálogo con Contenedor de Imagen + Blur */
+    .catalog { padding: 4rem 5% 6rem 5%; max-width: 1400px; margin: 0 auto; }
+    .catalog-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid var(--border); padding-bottom: 0.8rem; margin-bottom: 2.5rem;
+    }
+    .section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; }
+
+    .catalog-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 3rem 2rem;
+    }
+    .product-card { display: flex; flex-direction: column; text-decoration: none; color: var(--text); }
+
+    /* Efecto de Imagen y Hover Blur */
+    .image-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: filter 0.4s ease, transform 0.4s ease;
+    }
+
+    .edition-tag {
+      position: absolute; top: 1rem; right: 1rem;
+      font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+      border: 1px solid var(--taupe); padding: 0.2rem 0.5rem; color: var(--carbon);
+      background: rgba(245, 243, 238, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(245, 243, 238, 0.85);
+      backdrop-filter: blur(6px);
+      padding: 0.8rem 1.4rem;
+      border: 1px solid var(--border);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 3;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* Acciones al Hover */
+    .product-card:hover .product-img {
+      filter: blur(8px) brightness(0.9);
+      transform: scale(1.03);
+    }
+
+    .product-card:hover .overlay-text {
+      opacity: 1;
+    }
+
+    .product-info { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .product-title { font-weight: 500; text-transform: uppercase; }
+    .product-spec { color: var(--carbon); font-size: 0.75rem; font-weight: 300; line-height: 1.4; }
+
+    /* Drawer Lateral */
+    .drawer-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .drawer {
+      position: fixed; top: 0; right: -400px; width: 100%; max-width: 380px; height: 100%;
+      background: var(--bg); border-left: 1px solid var(--border);
+      z-index: 201; padding: 2rem; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .drawer.open { right: 0; }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .drawer-title { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; }
+    .drawer-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text); }
+    .drawer-body { margin-top: 2rem; font-size: 0.8rem; line-height: 1.6; }
+
+    /* Footer */
+    .ticker-bar {
+      background-color: var(--text); color: var(--bg);
+      padding: 1.2rem 0; display: flex; justify-content: space-around;
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    }
+
+    footer {
+      padding: 3rem 5%; display: flex; justify-content: space-between;
+      align-items: center; font-size: 0.75rem; color: var(--carbon);
+    }
+
+    @media (max-width: 768px) {
+      .catalog-grid { grid-template-columns: 1fr; }
+      .ticker-bar { flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="announcement-bar">Drop 01 — Acceso exclusivo anticipado</div>
+
+  <header>
+    <a href="#" class="logo">EDÉN</a>
+    <div class="nav-actions">
+      <button class="btn-action" onclick="toggleTheme()" id="themeBtn">Modo Dark</button>
+      <button class="btn-action" onclick="toggleDrawer(true)">Reserva VIP</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="hero-slogan">Athletic &bull; Essentials &bull; 01</p>
+      
+      <!-- Nuevo Eslogan Enfocado en Lanzamiento -->
+      <h1 class="hero-title">Drop 01: El origen de lo esencial.</h1>
+      
+      <p class="hero-desc">Una producción limitada concebida para redefinir el estándar diario. Registrate para recibir tu pase prioritario.</p>
+
+      <div class="timer-container">
+        <div class="timer-block"><span class="timer-val">04</span><span class="timer-unit">Días</span></div>
+        <div class="timer-block"><span class="timer-val">12</span><span class="timer-unit">Horas</span></div>
+        <div class="timer-block"><span class="timer-val">45</span><span class="timer-unit">Min</span></div>
+      </div>
+
+      <form class="newsletter-box" onsubmit="event.preventDefault(); toggleDrawer(true);">
+        <input type="email" placeholder="Tu correo electrónico" class="newsletter-input" required>
+        <button type="submit" class="newsletter-btn">Acceso</button>
+      </form>
+    </section>
+
+    <!-- Catálogo con Imágenes y Hover Blur -->
+    <section class="catalog">
+      <div class="catalog-header">
+        <span class="section-label">Lanzamiento Inicial — Drop 01</span>
+      </div>
+      
+      <div class="catalog-grid">
+        <article class="product-card">
+          <div class="image-container">
+            <span class="edition-tag">Ltd 50 U.</span>
+            <!-- Reemplaza src="tu-imagen.jpg" con la ruta de tu imagen -->
+            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=800&auto=format&fit=crop" alt="Remera Oversized Off-White" class="product-img">
+            <div class="overlay-text">Próximamente</div>
+          </div>
+          <div class="product-info">
+            <span class="product-title">Remera Oversized Off-White</span>
+            <span>Drop 01</span>
+          </div>
+          <p class="product-spec">Algodón Heavyweight 230 GSM &bull; Estampa<br>Corte Relajado &bull; Made in Argentina</p>
+        </article>
+
+        <article class="product-card">
+          <div class="image-container">
+            <span class="edition-tag">Ltd 30 U.</span>
+            <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800&auto=format&fit=crop" alt="Remera Core Black" class="product-img">
+            <div class="overlay-text">Próximamente</div>
+          </div>
+          <div class="product-info">
+            <span class="product-title">Remera Core Black</span>
+            <span>Drop 01</span>
+          </div>
+          <p class="product-spec">Algodón 100% Premium &bull; Chest Print<br>Corte Regular Estructurado &bull; Negro</p>
+        </article>
+
+        <article class="product-card">
+          <div class="image-container">
+            <span class="edition-tag">Edición Única</span>
+            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=800&auto=format&fit=crop" alt="Set Sweatpants & Hoodie" class="product-img">
+            <div class="overlay-text">Próximamente</div>
+          </div>
+          <div class="product-info">
+            <span class="product-title">Set Sweatpants & Hoodie</span>
+            <span>Drop 01</span>
+          </div>
+          <p class="product-spec">Friza pesada de algodón &bull; Tono sobre tono<br>Edición Limitada</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Drawer Lateral VIP Pass -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
+  <aside class="drawer" id="drawer">
+    <div>
+      <div class="drawer-header">
+        <h3 class="drawer-title">Pase de Acceso VIP</h3>
+        <button class="drawer-close" onclick="toggleDrawer(false)">&times;</button>
+      </div>
+      <div class="drawer-body">
+        <p>Tu correo ha sido registrado en la lista preferencial del Drop 01.</p>
+        <br>
+        <p>Recibirás una clave única en tu e-mail 30 minutos antes de la apertura pública para asegurar tu talle.</p>
+      </div>
+    </div>
+    <button class="newsletter-btn" style="width:100%" onclick="toggleDrawer(false)">Entendido</button>
+  </aside>
+
+  <div class="ticker-bar">
+    <span>Esencial</span><span>Atemporal</span><span>Real</span><span>EDÉN / 01</span>
+  </div>
+
+  <footer>
+    <span>&copy; 2026 EDÉN STUDIO</span>
+    <span>Buenos Aires, Argentina</span>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeBtn').textContent = isDark ? 'Modo Dark' : 'Modo Light';
+    }
+
+    function toggleDrawer(show) {
+      document.getElementById('drawerOverlay').classList.toggle('open', show);
+      document.getElementById('drawer').classList.toggle('open', show);
+    }
+  </script>
+</body>
+</html>
